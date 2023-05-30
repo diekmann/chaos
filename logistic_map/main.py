@@ -6,6 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def x_next(r, x):
+    """Implements the logistic function as differential equation."""
     assert 0 <= x <= 1
     return r*x*(1-x)
 
@@ -15,7 +16,7 @@ def converge(r):
     x_p = [x]  # previous values
     msg = ""
     convergence_count = 0
-    for i in range(100000):
+    for i in range(1000000):
         x_p.append(x)
         x = x_next(r, x)
         if math.isclose(x, x_p[-1], rel_tol=1e-15):
@@ -35,11 +36,11 @@ def converge(r):
 
 xs = []
 ys = []
-for r in np.arange(0, 4, 0.001):
+for r in np.arange(0, 4, 0.0001):
     cys, msg = converge(r)
     print(f"{r=:.3f}: {msg}")
     xs.extend([r]*len(cys))
     ys.extend(cys)
 
-plt.scatter(xs, ys)
+plt.scatter(xs, ys, marker='.')
 plt.show()
